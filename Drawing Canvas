@@ -1,0 +1,85 @@
+Form3.Designer.cs
+
+namespace WindowsFormsApp
+{
+    partial class Form3
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Form3
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Name = "Form3";
+            this.Text = "Drawing Canvas";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form3_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form3_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form3_MouseUp);
+            this.ResumeLayout(false);
+
+        }
+    }
+}
+
+Form3.cs
+
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp
+{
+    public partial class Form3 : Form
+    {
+        private bool isDrawing = false;
+        private Point startPoint = new Point();
+
+        public Form3()
+        {
+            InitializeComponent();
+        }
+
+        private void Form3_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDrawing = true;
+                startPoint = e.Location;
+            }
+        }
+
+        private void Form3_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDrawing)
+            {
+                using (Graphics g = CreateGraphics())
+                {
+                    g.DrawLine(Pens.Black, startPoint, e.Location);
+                    startPoint = e.Location;
+                }
+            }
+        }
+
+        private void Form3_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDrawing = false;
+            }
+        }
+    }
+}
